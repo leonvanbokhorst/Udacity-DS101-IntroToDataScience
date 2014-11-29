@@ -35,9 +35,7 @@ def create_dataframe():
         'bronze': Series(bronze)}
     
     olympic_medal_counts_df = DataFrame(df)
-    
-    print(olympic_medal_counts_df)
-    
+
     return olympic_medal_counts_df
 
 create_dataframe()
