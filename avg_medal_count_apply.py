@@ -29,7 +29,6 @@ def avg_medal_count():
                     'silver': Series(silver),
                     'bronze': Series(bronze)})
 
-    # avg_medal_count = numpy.mean(df[df.apply(lambda x: x > 0)])
     avg_medal_count = df[['gold', 'silver', 'bronze']].apply(numpy.mean)
 
 
