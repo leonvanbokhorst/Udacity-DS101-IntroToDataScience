@@ -74,7 +74,7 @@ def custom_heuristic(file_path):
         passenger_id = passenger['PassengerId']
         predictions[passenger_id] = 0
 
-        # exception to the rule: Child of a higher class
+        # exception to the rule: Child of a higher class under 16!
         if passenger['Age'] < 16 and (passenger['Pclass'] == 1 or passenger['Pclass'] == 2):
             predictions[passenger_id] = 1
 
