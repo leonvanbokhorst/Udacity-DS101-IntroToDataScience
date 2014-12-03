@@ -2,12 +2,17 @@ import pandas
 import pandasql
 
 
-def avg_min_temperature(filename):
+def num_rainy_days(filename):
     """
     This function should run a SQL query on a dataframe of
-    weather data. More specifically you want to find the average
-    minimum temperature on rainy days where the minimum temperature
-    is greater than 55 degrees.
+    weather data.  The SQL query should return one column and
+    one row - a count of the number of days in the dataframe where
+    the rain column is equal to 1 (i.e., the number of days it
+    rained).  The dataframe will be titled 'weather_data'. You'll
+    need to provide the SQL query.  You might find SQL's count function
+    useful for this exercise.  You can read more about it here:
+
+    https://dev.mysql.com/doc/refman/5.1/en/counting-rows.html
 
     You might also find that interpreting numbers as integers or floats may not
     work initially.  In order to get around this issue, it may be useful to cast
@@ -22,15 +27,13 @@ def avg_min_temperature(filename):
     weather_data = pandas.read_csv(filename)
 
     q = """
-    select avg(cast (mintempi as integer))
-    from weather_data
-    where rain = 1 and cast (mintempi as integer) > 55
+    select count(*) from weather_data
+    where rain = 1
     """
 
     # Execute your SQL command against the pandas frame
-    mean_temp_weekends = pandasql.sqldf(q.lower(), locals())
+    rainy_days = pandasql.sqldf(q.lower(), locals())
 
-    return mean_temp_weekends
+    return rainy_days
 
-
-print avg_min_temperature(u'D:\OneDrive\Data\weather_underground.csv')
+print num_rainy_days(u'D:\OneDrive\Data\weather_underground.csv')

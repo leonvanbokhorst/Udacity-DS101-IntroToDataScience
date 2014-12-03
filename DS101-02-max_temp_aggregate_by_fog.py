@@ -2,12 +2,14 @@ import pandas
 import pandasql
 
 
-def avg_min_temperature(filename):
+def max_temp_aggregate_by_fog(filename):
     """
     This function should run a SQL query on a dataframe of
-    weather data. More specifically you want to find the average
-    minimum temperature on rainy days where the minimum temperature
-    is greater than 55 degrees.
+    weather data.  The SQL query should return two columns and
+    two rows - whether it was foggy or not (0 or 1) and the max
+    maxtempi for that fog value (i.e., the maximum max temperature
+    for both foggy and non-foggy days).  The dataframe will be
+    titled 'weather_data'. You'll need to provide the SQL query.
 
     You might also find that interpreting numbers as integers or floats may not
     work initially.  In order to get around this issue, it may be useful to cast
@@ -19,18 +21,18 @@ def avg_min_temperature(filename):
     You can see the weather data that we are passing in below:
     https://www.dropbox.com/s/7sf0yqc9ykpq3w8/weather_underground.csv
     """
+
     weather_data = pandas.read_csv(filename)
 
     q = """
-    select avg(cast (mintempi as integer))
-    from weather_data
-    where rain = 1 and cast (mintempi as integer) > 55
+    select fog, max(cast(maxtempi as integer)) from weather_data
+    group by fog
     """
 
     # Execute your SQL command against the pandas frame
-    mean_temp_weekends = pandasql.sqldf(q.lower(), locals())
+    foggy_days = pandasql.sqldf(q.lower(), locals())
 
-    return mean_temp_weekends
+    return foggy_days
 
 
-print avg_min_temperature(u'D:\OneDrive\Data\weather_underground.csv')
+print max_temp_aggregate_by_fog(u'D:\OneDrive\Data\weather_underground.csv')
