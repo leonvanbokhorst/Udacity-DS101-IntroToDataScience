@@ -1,48 +1,46 @@
 import numpy
-import scipy.stats
-import pandas as pd
+import pandas
 
 
-def compare_averages(filename):
+def compute_cost(features, values, theta):
     """
-    Performs a t-test on two sets of baseball data (left-handed and right-handed hitters).
+    Compute the cost of a list of parameters, theta, given a list of features 
+    (input data points) and values (output data points).
+    """
+    m = len(values)
+    sum_of_square_errors = numpy.square(numpy.dot(features, theta) - values).sum()
+    cost = sum_of_square_errors / (2 * m)
 
-    You will be given a csv file that has three columns.  A player's
-    name, handedness (L for lefthanded or R for righthanded) and their
-    career batting average (called 'avg'). You can look at the csv
-    file via the following link:
-    https://www.dropbox.com/s/xcn0u2uxm8c4n6l/baseball_data.csv
-    
-    Write a function that will read that the csv file into a pandas data frame,
-    and run Welch's t-test on the two cohorts defined by handedness.
-    
-    One cohort should be a data frame of right-handed batters. And the other
-    cohort should be a data frame of left-handed batters.
-    
-    We have included the scipy.stats library to help you write
-    or implement Welch's t-test:
-    http://docs.scipy.org/doc/scipy/reference/stats.html
-    
-    With a significance level of 95%, if there is no difference
-    between the two cohorts, return a tuple consisting of
-    True, and then the tuple returned by scipy.stats.ttest.  
-    
-    If there is a difference, return a tuple consisting of
-    False, and then the tuple returned by scipy.stats.ttest.
-    
-    For example, the tuple that you return may look like:
-    (True, (9.93570222, 0.000023))
+    return cost
+
+
+def gradient_descent(features, values, theta, alpha, num_iterations):
+    """
+    Perform gradient descent given a data set with an arbitrary number of features.
     """
 
-    # read data
-    df = pd.read_csv(filename)
-    left_handed = df[df['handedness'] == 'L']
-    right_handed = df[df['handedness'] == 'R']
+    # Write code here that performs num_iterations updates to the elements of theta.
+    # times. Every time you compute the cost for a given list of thetas, append it 
+    # to cost_history.
+    # See the Instructor notes for hints. 
 
-    result = scipy.stats.ttest_ind(left_handed['avg'], right_handed['avg'], equal_var=False)
-    retain_null = result[1] > .05
+    cost_history = []
+    m = len(values) * 1.0
 
-    return retain_null, result
+    for i in range(0, num_iterations):
+        # Calculate cost
+        cost = compute_cost(features, values, theta)
+
+        # Append cost to history
+        cost_history.append(cost)
+
+        # Calculate new theta
+        theta += alpha * (1 / m) * numpy.dot((values - numpy.dot(features, theta)), features)
+
+    return theta, pandas.Series(cost_history)  # leave this line for the grader
 
 
-print compare_averages(r'D:\OneDrive\Data\baseball_data.csv')
+featrs = [1.2, 2.1, 3.9, 4.0, 1.9, 2.4]
+values = [2.3, 3.6, 4.1, 5.2, 6.9, 7.7]
+thetas = [0.05, 0.3, 0.15, 0.5, 0.05, 0.3]
+print gradient_descent(featrs, values, thetas, .005, 100)
