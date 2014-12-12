@@ -2,17 +2,37 @@ import numpy
 import pandas
 
 
-def compute_cost(features, values, theta):
+def compute_cost(predicted_values, values, theta):
     """
     Compute the cost of a list of parameters, theta, given a list of features
     (input data points) and values (output data points).
     """
     m = len(values)
 
-    sum_of_square_errors = numpy.square(numpy.dot(features, theta) - values).sum()
+    sum_of_square_errors = numpy.square(predicted_values - values).sum()
     cost = sum_of_square_errors / (2 * m)
 
     return cost
+
+
+def calculate_predicted_values(features, theta):
+    """
+    Calculate the sum of the predicted values given the featuire set and theta's
+    """
+    predicted_values = numpy.dot(features, theta)
+
+    return predicted_values
+
+
+def calculate_theta(alpha, features, predicted_values, theta, values):
+    """
+    Calculate the new theta given the predicted values vs the actual values
+    """
+
+    m = len(values) * 1.0
+    theta -= (alpha / m) * numpy.dot((predicted_values - values), features)
+
+    return theta
 
 
 def gradient_descent(features, values, theta, alpha, num_iterations):
@@ -32,18 +52,16 @@ def gradient_descent(features, values, theta, alpha, num_iterations):
     # See the Instructor notes for hints.
 
     cost_history = []
-    m = len(values) * 1.0
 
     for i in range(0, num_iterations):
         # Calculate the predicted values
-        predicted_values = numpy.dot(features, theta)
+        predicted_values = calculate_predicted_values(features, theta)
 
         # Gradient Descent in action:
-        # Calculate new theta
-        theta -= (alpha / m) * numpy.dot((predicted_values - values), features)
+        theta = calculate_theta(alpha, features, predicted_values, theta, values)
 
         # Calculate cost
-        cost = compute_cost(features, values, theta)
+        cost = compute_cost(predicted_values, values, theta)
 
         # Append cost to history
         cost_history.append(cost)
