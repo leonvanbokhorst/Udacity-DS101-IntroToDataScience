@@ -24,4 +24,4 @@ def filter_by_regular(filename):
     return turnstile_data[turnstile_data['DESCn'] == 'REGULAR']
 
 
-print filter_by_regular(r'D:\OneDrive\Data\master_updated_turnstile_110528.txt')
+print filter_by_regular(r'Data\master_updated_turnstile_110528.txt')

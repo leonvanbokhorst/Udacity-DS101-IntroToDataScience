@@ -36,4 +36,4 @@ def num_rainy_days(filename):
 
     return rainy_days
 
-print num_rainy_days(u'D:\OneDrive\Data\weather_underground.csv')
+print num_rainy_days(u'Data\weather_underground.csv')

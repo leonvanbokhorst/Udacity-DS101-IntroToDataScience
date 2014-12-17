@@ -58,5 +58,5 @@ def plot_weather_data(weather_data):
     return plot
 
 
-df = pd.read_csv(r"D:\OneDrive\Data\turnstile_data_master_with_weather.csv")
+df = pd.read_csv(r"Data\turnstile_data_master_with_weather.csv")
 print plot_weather_data(df)

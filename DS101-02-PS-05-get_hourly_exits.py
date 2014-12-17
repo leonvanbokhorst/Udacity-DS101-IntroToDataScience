@@ -38,5 +38,5 @@ def get_hourly_exits(df):
     return df
 
 
-df = pandas.read_csv(r'D:\OneDrive\Data\master_updated_turnstile_110528.txt')
+df = pandas.read_csv(r'Data\master_updated_turnstile_110528.txt')
 print get_hourly_exits(df)

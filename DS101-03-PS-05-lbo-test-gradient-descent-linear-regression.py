@@ -176,7 +176,7 @@ def plot_residuals(turnstile_weather, predictions):
 
 
 
-df = pd.read_csv(r"D:\OneDrive\Data\lbo-test.csv")
+df = pd.read_csv(r"Data\lbo-test.csv")
 print df
 
 pred, plot, r2, costhist = predictions(df)

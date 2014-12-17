@@ -39,5 +39,5 @@ def mann_whitney_plus_means(turnstile_weather):
     return with_rain_mean, without_rain_mean, U, p  # leave this line for the grader
 
 
-df = pd.read_csv(r"D:\OneDrive\Data\turnstile_data_master_with_weather.csv")
+df = pd.read_csv(r"Data\turnstile_data_master_with_weather.csv")
 print mann_whitney_plus_means(df)

@@ -35,4 +35,4 @@ def max_temp_aggregate_by_fog(filename):
     return foggy_days
 
 
-print max_temp_aggregate_by_fog(u'D:\OneDrive\Data\weather_underground.csv')
+print max_temp_aggregate_by_fog(u'Data\weather_underground.csv')

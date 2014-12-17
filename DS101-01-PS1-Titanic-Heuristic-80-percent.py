@@ -80,4 +80,4 @@ def custom_heuristic(file_path):
 
     return predictions
 
-print custom_heuristic(r'D:\OneDrive\Documents\Udacity-Courses\04.Intro to Data Science\Data\titanic_data.csv')
+print custom_heuristic(r'Data\titanic_data.csv')

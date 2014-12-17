@@ -64,7 +64,7 @@ def fix_turnstile_data(filenames):
             writer.writerows(result)
 
 
-fix_turnstile_data([r'D:\OneDrive\Data\turnstile_110528.txt'])
+fix_turnstile_data([r'Data\turnstile_110528.txt'])
 
 
 # ['A002', 'R051', '02-00-00',

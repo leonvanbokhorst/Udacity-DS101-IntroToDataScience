@@ -45,4 +45,4 @@ def compare_averages(filename):
     return retain_null, result
 
 
-print compare_averages(r'D:\OneDrive\Data\baseball_data.csv')
+print compare_averages(r'Data\baseball_data.csv')

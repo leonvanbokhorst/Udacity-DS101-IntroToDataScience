@@ -219,7 +219,7 @@ def plot_residuals(turnstile_weather, predictions):
 
 
 
-df = pd.read_csv(r"D:\OneDrive\Data\turnstile_data_master_with_weather.csv")
+df = pd.read_csv(r"Data\turnstile_data_master_with_weather.csv")
 pred, plot, r2 = predictions(df)
 print pred
 print r2

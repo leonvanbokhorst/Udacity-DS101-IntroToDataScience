@@ -67,4 +67,4 @@ def complex_heuristic(file_path):
 
     return predictions
 
-print complex_heuristic(r'D:\OneDrive\Documents\Udacity-Courses\04.Intro to Data Science\Data\titanic_data.csv')
+print complex_heuristic(r'Data\titanic_data.csv')

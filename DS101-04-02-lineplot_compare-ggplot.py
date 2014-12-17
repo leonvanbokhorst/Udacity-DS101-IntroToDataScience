@@ -31,4 +31,4 @@ def lineplot_compare(hr_by_team_year_sf_la_csv):
     return plot
 
 
-print lineplot_compare(r"D:\OneDrive\Data\hr_by_team_year_sf_la.csv")
+print lineplot_compare(r"Data\hr_by_team_year_sf_la.csv")

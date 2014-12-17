@@ -41,4 +41,4 @@ def avg_min_temperature(filename):
     return mean_temp_weekends
 
 
-print avg_min_temperature(u'D:\OneDrive\Data\weather_underground.csv')
+print avg_min_temperature(u'Data\weather_underground.csv')
