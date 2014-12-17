@@ -1,34 +1,62 @@
-from ggplot.themes import theme_matplotlib
-from pandas import *
+import pandas as pd
+from datetime import datetime
 from ggplot import *
+import pandasql
 
-import pandas
+pd.options.mode.chained_assignment = None
 
 
-def lineplot_compare(hr_by_team_year_sf_la_csv):
-    # Write a function, lineplot_compare, that will read a csv file
-    # called hr_by_team_year_sf_la.csv and plot it using pandas and ggplot2.
-    #
-    # This csv file has three columns: yearID, HR, and teamID. The data in the
-    # file gives the total number of home runs hit each year by the SF Giants
-    # (teamID == 'SFN') and the LA Dodgers (teamID == "LAN"). Produce a
-    # visualization comparing the total home runs by year of the two teams.
-    #
-    # You can see the data in hr_by_team_year_sf_la_csv
-    # at the link below:
-    # https://www.dropbox.com/s/wn43cngo2wdle2b/hr_by_team_year_sf_la.csv
-    #
-    # Note that to differentiate between multiple categories on the
-    # same plot in ggplot, we can pass color in with the other arguments
-    # to aes, rather than in our geometry functions. For example,
-    # ggplot(data, aes(xvar, yvar, color=category_var)). This should help you
-    # in this exercise.
+def get_day_number(date):
+    return datetime.strftime(datetime.strptime(date, '%Y-%m-%d').date(), '%d')
 
-    data = pandas.read_csv(hr_by_team_year_sf_la_csv)
-    plot = ggplot(aes('yearID', 'HR', color='teamID'), data) + geom_point() + geom_line() + \
-        ggtitle('Number of homeruns per year') + xlab('Year') + ylab('Homeruns')
+
+def plot_weather_data(weather_data):
+    """
+    You are passed in a dataframe called turnstile_weather.
+    Use turnstile_weather along with ggplot to make a data visualization
+    focused on the MTA and weather data we used in assignment #3.
+    You should feel free to implement something that we discussed in class
+    (e.g., scatterplots, line plots, or histograms) or attempt to implement
+    something more advanced if you'd like.
+
+    Here are some suggestions for things to investigate and illustrate:
+     * Ridership by time of day or day of week
+ ->  * How ridership varies based on Subway station
+     * Which stations have more exits or entries at different times of day
+
+    If you'd like to learn more about ggplot and its capabilities, take
+    a look at the documentation at:
+    https://pypi.python.org/pypi/ggplot/
+
+    You can check out:
+    https://www.dropbox.com/s/meyki2wl9xfa7yk/turnstile_data_master_with_weather.csv
+
+    To see all the columns and data points included in the turnstile_weather
+    dataframe.
+
+    However, due to the limitation of our Amazon EC2 server, we are giving you a random
+    subset, about 1/3 of the actual data in the turnstile_weather dataframe.
+    """
+
+    weather_data['daynumber'] = weather_data['DATEn'].apply(lambda d: get_day_number(d))
+    weather_data.rename(columns=lambda x: x.replace(' ', '_').lower(), inplace=True)
+
+    q = '''
+        select daynumber, avg((meantempi - 32) * 5/9) as meantempi
+        from weather_data
+        group by daynumber
+    '''
+
+    # Execute your SQL command against the pandas frame
+    result = pandasql.sqldf(q.lower(), locals())
+
+    plot = ggplot(aes(x='daynumber', y='meantempi'), data=result) + \
+        geom_point() + \
+        stat_smooth(color='green') + \
+        ggtitle('Mean temperature per day') + ylab('Degrees Celsius') + xlab('Day number')
 
     return plot
 
 
-print lineplot_compare(r"D:\OneDrive\Data\hr_by_team_year_sf_la.csv")
+df = pd.read_csv(r"D:\OneDrive\Data\turnstile_data_master_with_weather.csv")
+print plot_weather_data(df)
