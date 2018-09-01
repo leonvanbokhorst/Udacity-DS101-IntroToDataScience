@@ -11,14 +11,10 @@ def time_to_hour(time):
 
     Please return hour as an integer.
     """
+    
+    hour = int(time[0:2])
 
-    pos = time.find(':')
-    hour = time[:pos]
-
-    if hour[0] == '0':
-        hour = hour[1:]
-
-    return int(hour)
+    return hour
 
 
 print time_to_hour('21:03:00')
